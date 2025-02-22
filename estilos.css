@@ -8,3 +8,10 @@ body {
 h1, h2 {
     color: #007bff;
 }
+
+ul {
+    list-style-type: circle;
+    padding: 0;
+    color: black;
+    text-align: left;
+}
