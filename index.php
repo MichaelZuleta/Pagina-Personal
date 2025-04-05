@@ -53,6 +53,9 @@
     </nav>
     <main>
         <h2>Pagina Principal</h2>
+        <?php
+        echo "Este es un texto ejecutado con php";
+        ?>
         <p>Esta es una prueba para la página de mi estudio indie de videojuegos (idea en construcción), siéntete libre de explorarla a tu gusto.</p>
         <ul>
             <li>El Último Brote</li>
