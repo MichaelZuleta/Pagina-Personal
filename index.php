@@ -42,6 +42,7 @@
     </style>
 </head>
 <body>
+    
     <header>
         <h1>Bienvenid@ a mi pagina</h1>
     </header>
@@ -51,11 +52,13 @@
         <a href="Contacto.html">Contacto</a>
         <a href="Catalogo.html">Catálogo</a>
     </nav>
-    <main>
+    <main>        
+
         <h2>Pagina Principal</h2>
         <?php
         echo "Este es un texto ejecutado con php";
         ?>
+
         <p>Esta es una prueba para la página de mi estudio indie de videojuegos (idea en construcción), siéntete libre de explorarla a tu gusto.</p>
         <ul>
             <li>El Último Brote</li>
@@ -70,6 +73,31 @@
         </video>
         <p>Esta es una canción que yo mismo compuse para el primer juego serio que desarrollé en mis estudios (El Último Brote), la canción se llama Semilla.</p>
         
+        <h2>Inspiración Visual - Pixel art</h2>
+<div class="image-grid" id="pexelsImages"></div>
+
+<script>
+  const apiKey = 'LvPhl6Q9FkiX8ByP1Xl5vNCxSErYulyYTFli4ucwtmYx81clsSCFE4oe';
+  const query = 'pixel art';
+
+  fetch(`https://api.pexels.com/v1/search?query=${query}&per_page=6`, {
+    headers: {
+      Authorization: apiKey
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById('pexelsImages');
+    data.photos.forEach(photo => {
+      const img = document.createElement('img');
+      img.src = photo.src.medium;
+      img.alt = photo.photographer;
+      container.appendChild(img);
+    });
+  })
+  .catch(error => console.error('Error al obtener imágenes:', error));
+</script>
+
     </main>
     <footer>
         <p>&copy; 2025 Michael Zuleta - Daikiri</p>
