@@ -1,137 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <link rel="stylesheet" href="estilos.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Productos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 1rem;
-            text-align: center;
-        }
-        nav {
-            margin: 1rem;
-        }
-        nav a {
-            margin: 0 1rem;
-            text-decoration: none;
-            color: #333;
-        }
-        main {
-            padding: 2rem;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: .1rem;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo de Productos</title>
 
-        /* New styles for the catalog */
-.catalog {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    background-color: rgb(190, 188, 188); /* Gray background for the catalog section */
-    padding: 2rem;
-    border-radius: 10px; /* Optional: adds rounded corners to the catalog section */
-}
+  <link rel="stylesheet" href="css/bootstrap.min.css">
 
-.product {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    margin: 1rem;
-    width: 250px;
-    background-color: #333;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    color: #fff;
-}
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-bottom: 100px; 
+      background-color: #f4f4f4;
+    }
 
-.product img {
-    width: 100%;
-    height: 150px;
-    object-fit: contain;
-}
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
 
-.product button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 0.5rem;
-    cursor: pointer;
-}
+    nav a {
+      margin: 0 0.5rem;
+      text-decoration: none;
+      color: #333;
+    }
 
-        
-        /* New styles for the cart */
-.cart {
-    margin-top: 2rem;
-    background-color: #f9f9f9;
-    padding: 1rem;
-    border-radius: 10px;
-    max-height: 300px; /* Set a maximum height for the cart */
-    overflow-y: auto;  /* Enable scrolling if the content exceeds max height */
-}
+    .catalog {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      background-color: rgb(190, 188, 188);
+      padding: 2rem;
+      border-radius: 10px;
+    }
 
-.cart ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
+    .product {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      background-color: #333;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      color: #fff;
+    }
 
-.cart li {
-    margin-bottom: 0.5rem;
-}
+    .product img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 5px;
+    }
 
-.checkout {
-            background-color: #28a745;
-            color: white;
-            padding: 1rem;
-            margin-bottom: 4rem;
-            cursor: pointer;
-        }
+    .product button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
 
-    </style>
+    .cart {
+      margin-top: 2rem;
+      background-color: #f9f9f9;
+      padding: 1rem;
+      border-radius: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .cart ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .cart li {
+      margin-bottom: 0.5rem;
+    }
+
+    .checkout {
+      background-color: #28a745;
+      color: white;
+      padding: 0.8rem;
+      margin-top: 1rem;
+      width: 100%;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 0.5rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Catálogo de Productos</h1>
-    </header>
-    <nav>
-        <a href="index.html">Inicio</a>
-        <a href="SobreMi.php">Sobre Mi</a>
-        <a href="Contacto.html">Contacto</a>
-        <a href="Catalogo.html">Catálogo</a>
-    </nav>
-    <main>
-        <h2>Varios Assets Para Tus Videojuegos</h2>
-        <div class="catalog" id="productCatalog">
-        </div>
-        
-        <div class="cart">
-            <h2>Carrito de Compras</h2>
-            <ul id="cartItems">
-            </ul>
-            <button class="checkout" id="checkoutBtn">Ir a Pagar</button>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2025 Michael Zuleta - Daikiri</p>
-    </footer>
 
-    <script src="Catalogo.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+
+  <header>
+    <h1>Catálogo de Productos</h1>
+  </header>
+
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="#">Daikiri Studio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="SobreMi.php">Sobre Mi</a></li>
+          <li class="nav-item"><a class="nav-link" href="Contacto.html">Contacto</a></li>
+          <li class="nav-item"><a class="nav-link" href="Catalogo.html">Catálogo</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mt-4">
+    <h2 class="mb-4">Varios Assets Para Tus Videojuegos</h2>
+
+    <div class="catalog" id="productCatalog">
+      
+    </div>
+
+    <div class="cart mt-5">
+      <h2>Carrito de Compras</h2>
+      <ul id="cartItems"></ul>
+      <button class="checkout" id="checkoutBtn">Ir a Pagar</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Michael Zuleta - Daikiri</p>
+  </footer>
+
+  <script src="Catalogo.js"></script>
 </body>
 </html>

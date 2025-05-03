@@ -1,121 +1,121 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Información del Cliente</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 1rem;
-            text-align: center;
-        }
-        nav {
-            margin: 1rem;
-        }
-        nav a {
-            margin: 0 1rem;
-            text-decoration: none;
-            color: #333;
-        }
-        main {
-            padding: 2rem;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: .2rem;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Información del Cliente</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f4f4;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 0.5rem;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
 
-    <h2>Información del Cliente</h2>
+  <header class="bg-dark text-white text-center py-3 mb-4">
+    <h1>Información del Cliente</h1>
+  </header>
 
-    <!-- Formulario para ingresar los datos -->
-    <form id="paymentForm">
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required><br><br>
+  <div class="container mb-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
 
-        <label for="email">Correo Electrónico:</label>
-        <input type="email" id="email" name="email" required><br><br>
+        <div class="card shadow-sm p-4 mb-4">
+          <h3 class="mb-4">Detalles del Cliente</h3>
+          <form id="paymentForm">
+            <div class="mb-3">
+              <label for="name" class="form-label">Nombre</label>
+              <input type="text" id="name" name="name" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo Electrónico</label>
+              <input type="email" id="email" name="email" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Teléfono</label>
+              <input type="text" id="phone" name="phone" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Confirmar Compra</button>
+          </form>
+        </div>
 
-        <label for="phone">Teléfono:</label>
-        <input type="text" id="phone" name="phone" required><br><br>
+        <div class="card shadow-sm p-4">
+          <h4 class="mb-3">Productos en el Carrito</h4>
+          <ul id="cartItemsList" class="list-group"></ul>
+        </div>
 
-        <button type="submit">Confirmar Compra</button>
-    </form>
+      </div>
+    </div>
+  </div>
 
-    <h3>Productos en el Carrito</h3>
-    <ul id="cartItemsList">
-        <!-- Los productos del carrito se mostrarán aquí -->
-    </ul>
+  <footer>
+    <p>&copy; 2025 Michael Zuleta - Daikiri</p>
+  </footer>
 
-    <script>
-        // Mostrar los productos del carrito en esta página
-        const cart = JSON.parse(localStorage.getItem('cart'));
-        const cartItemsList = document.getElementById('cartItemsList');
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-        if (cart) {
-            cart.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = `${item.name} - $${item.price}`;
-                cartItemsList.appendChild(li);
-            });
+  <script>
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    const cartItemsList = document.getElementById('cartItemsList');
+
+    if (cart && cart.length > 0) {
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.classList.add('list-group-item');
+        li.textContent = `${item.name} - $${item.price}`;
+        cartItemsList.appendChild(li);
+      });
+    } else {
+      const li = document.createElement('li');
+      li.classList.add('list-group-item', 'text-muted');
+      li.textContent = 'El carrito está vacío.';
+      cartItemsList.appendChild(li);
+    }
+
+    document.getElementById('paymentForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const customerName = document.getElementById('name').value;
+      const customerEmail = document.getElementById('email').value;
+      const customerPhone = document.getElementById('phone').value;
+
+      if (customerName && customerEmail && customerPhone) {
+        submitOrder(customerName, customerEmail, customerPhone);
+      } else {
+        alert("Por favor, completa todos los campos.");
+      }
+    });
+
+    function submitOrder(name, email, phone) {
+      fetch('order.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}&cart=${encodeURIComponent(JSON.stringify(cart))}`
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert(data.message);
+          localStorage.removeItem('cart');
+          window.location.href = 'thankyou.html';
+        } else {
+          alert("Error al procesar la compra: " + data.message);
         }
-
-        // Enviar los datos al servidor cuando se envíe el formulario
-        document.getElementById('paymentForm').addEventListener('submit', (e) => {
-            e.preventDefault(); // Evitar el comportamiento por defecto del formulario
-
-            const customerName = document.getElementById('name').value;
-            const customerEmail = document.getElementById('email').value;
-            const customerPhone = document.getElementById('phone').value;
-
-            if (customerName && customerEmail && customerPhone) {
-                // Enviar los datos y el carrito al servidor
-                submitOrder(customerName, customerEmail, customerPhone);
-            } else {
-                alert("Por favor, completa todos los campos.");
-            }
-        });
-
-        // Función para enviar la orden al servidor
-        function submitOrder(customerName, customerEmail, customerPhone) {
-            // Enviar los datos al servidor
-            fetch('order.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `name=${customerName}&email=${customerEmail}&phone=${customerPhone}&cart=${JSON.stringify(cart)}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message); // Mostrar mensaje de éxito
-                    localStorage.removeItem('cart'); // Limpiar el carrito
-                    window.location.href = 'thankyou.html'; // Redirigir a una página de agradecimiento
-                } else {
-                    alert("Error al procesar la compra: " + data.message);
-                }
-            })
-            .catch(error => {
-                alert("Hubo un error al procesar tu compra: " + error);
-            });
-        }
-    </script>
-
+      })
+      .catch(error => {
+        alert("Hubo un error al procesar tu compra: " + error);
+      });
+    }
+  </script>
 </body>
 </html>
